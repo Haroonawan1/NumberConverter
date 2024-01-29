@@ -1,12 +1,14 @@
 public class NumberConverter {
     int[] digits;
-    static int[] allowedBases;
     int base;
 
     public NumberConverter(int number, int base) {
         digits = numToArr(Integer.toString(number));
         this.base = base;
-        allowedBases = new int[]{2, 8, 10, 16};
+    }
+
+    public int getBase(){
+        return base;
     }
 
     public int[] numToArr(String numberAsString){
@@ -35,15 +37,9 @@ public class NumberConverter {
         return o;
     }
 
-    public int[] getDigits() {
-        return digits;
-    }
-
-    public static boolean validBase(int input){
-        for (int base : allowedBases){
-            if (base == input){
-                return true;
-            }
+    public boolean validBase(){
+        if (base > 1 && base < 65){
+            return true;
         }
         return false;
     }
@@ -56,6 +52,7 @@ public class NumberConverter {
         }
         return true;
     }
+
 
     public static String[] reverse(String[] numList){
         String[] newNumList = new String[numList.length];
@@ -123,5 +120,9 @@ public class NumberConverter {
         }
         String[] hexArr = hexNum.split("");
         return reverse(hexArr);
+    }
+
+    public String[] convertUpTo64(){
+        return null;
     }
 }

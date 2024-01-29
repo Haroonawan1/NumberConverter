@@ -1,36 +1,47 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 class ConverterRunner {
     public static void main(String[] args) {
         System.out.println("Welcome to the Number Converter!");
-        System.out.println("--------------------------------");
-        System.out.print("Enter the base of your number (2, 8, 10, 16): ");
+        System.out.println("  1. Convert a common base number into other common bases");
+        System.out.println("  2. Convert a base 10 number into any base from 1 to 64");
+        System.out.print("Your Choice: ");
 
         Scanner s = new Scanner(System.in);
         String choice = s.nextLine();
-        int base = Integer.parseInt(choice);
 
-        System.out.print("Enter your number: ");
-        String number = s.nextLine();
-        int n = Integer.parseInt(number);
-
-        s.close();
-        NumberConverter nc = new NumberConverter(n, base);
-
-        if (NumberConverter.validBase(base) && nc.validDigits()){
-            int[] digits = nc.getDigits();
+        if (choice.equals("1")){
             System.out.println("--------------------------------");
-            System.out.println("Base 16 : " + nc.arrToStr(nc.convertToHex()));
-            System.out.println("Base 10 : " + nc.arrToNum(nc.convertToDecimal()));
-            System.out.println("Base 8  : " + nc.arrToNum(nc.convertToOctal()));
-            System.out.println("Base 2  : " + nc.arrToNum(nc.convertToBinary()));
-            System.out.println("--------------------------------");
+            System.out.print("Enter the base of your number (2, 8, 10, 16): ");
+            int base = Integer.parseInt(s.nextLine());
 
+            System.out.print("Enter your number: ");
+            int number = Integer.parseInt(s.nextLine());
+
+            s.close();
+            NumberConverter nc = new NumberConverter(number, base);
+
+            if (nc.validBase() && nc.validDigits()){
+                System.out.println("--------------------------------");
+                System.out.println("Base 16 : " + nc.arrToStr(nc.convertToHex()));
+                System.out.println("Base 10 : " + nc.arrToNum(nc.convertToDecimal()));
+                System.out.println("Base 8  : " + nc.arrToNum(nc.convertToOctal()));
+                System.out.println("Base 2  : " + nc.arrToNum(nc.convertToBinary()));
+            }
+            else {
+                System.out.println("--------------------------------");
+                System.out.println("Your input was not valid!");
+            }
         }
-        else {
+
+        if (choice.equals("2")){
             System.out.println("--------------------------------");
-            System.out.println("Your input was not valid!");
+            System.out.print("Enter your base 10 number: ");
+            int decimalNum = Integer.parseInt(s.nextLine());
+            System.out.println("Enter the base you want to convert to: ");
+            int base = Integer.parseInt(s.nextLine());
+
+            NumberConverter nc = new NumberConverter(decimalNum, 10);
         }
     }
 }
