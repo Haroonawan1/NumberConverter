@@ -1,6 +1,7 @@
 public class NumberConverter {
     int[] digits;
     int base;
+    String[] values = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "+", "/"};
 
     public NumberConverter(int number, int base) {
         digits = numToArr(Integer.toString(number));
@@ -45,8 +46,18 @@ public class NumberConverter {
     }
 
     public boolean validDigits(){
+        String[] tempValues = new String[base];
+        for (int i = 0; i < tempValues.length; i++){
+            tempValues[i] = values[i];
+        }
         for (int digit : digits){
-            if(digit > base - 1){
+            boolean validDigit = false;
+            for (String value : tempValues){
+                if (value.equals(Integer.toString(digit))){
+                    validDigit = true;
+                }
+            }
+            if (!validDigit){
                 return false;
             }
         }
@@ -110,7 +121,7 @@ public class NumberConverter {
 
     public String[] convertToHex() {
         int decimalNum = arrToNum(convertToDecimal());
-        String[] values = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+        //String[] values = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
         String hexNum = "";
         int remainder;
         while (decimalNum != 0){
@@ -122,7 +133,16 @@ public class NumberConverter {
         return reverse(hexArr);
     }
 
-    public String[] convertUpTo64(){
-        return null;
+    public String[] convertUpTo64(int newBase){
+        int decimalNum = arrToNum(convertToDecimal());
+        String newNum = "";
+        int remainder;
+        while (decimalNum != 0){
+            remainder = decimalNum % newBase;
+            newNum += values[remainder];
+            decimalNum /= newBase;
+        }
+        String[] newNumArr = newNum.split("");
+        return reverse(newNumArr);
     }
 }

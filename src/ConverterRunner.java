@@ -22,11 +22,18 @@ class ConverterRunner {
             NumberConverter nc = new NumberConverter(number, base);
 
             if (nc.validBase() && nc.validDigits()){
+                String[] conversions = new String[4];
                 System.out.println("--------------------------------");
-                System.out.println("Base 16 : " + nc.arrToStr(nc.convertToHex()));
-                System.out.println("Base 10 : " + nc.arrToNum(nc.convertToDecimal()));
-                System.out.println("Base 8  : " + nc.arrToNum(nc.convertToOctal()));
-                System.out.println("Base 2  : " + nc.arrToNum(nc.convertToBinary()));
+                conversions[0] = "Base 16 : " + nc.arrToStr(nc.convertToHex());
+                conversions[1] = "Base 10 : " + nc.arrToNum(nc.convertToDecimal());
+                conversions[2] = "Base 8  : " + nc.arrToNum(nc.convertToOctal());
+                conversions[3] = "Base 2  : " + nc.arrToNum(nc.convertToBinary());
+                for (String conversion : conversions){
+                    String str = "Base " + base;
+                    if (!conversion.contains(str)){
+                        System.out.println(conversion);
+                    }
+                }
             }
             else {
                 System.out.println("--------------------------------");
@@ -38,10 +45,18 @@ class ConverterRunner {
             System.out.println("--------------------------------");
             System.out.print("Enter your base 10 number: ");
             int decimalNum = Integer.parseInt(s.nextLine());
-            System.out.println("Enter the base you want to convert to: ");
+            System.out.print("Enter the base you want to convert to: ");
             int base = Integer.parseInt(s.nextLine());
 
             NumberConverter nc = new NumberConverter(decimalNum, 10);
+            if (nc.validBase() && nc.validDigits()){
+                System.out.println("--------------------------------");
+                System.out.println("Base " + base + " : " + nc.arrToStr(nc.convertUpTo64(base)));
+            }
+            else {
+                System.out.println("--------------------------------");
+                System.out.println("Your input was not valid!");
+            }
         }
     }
 }
