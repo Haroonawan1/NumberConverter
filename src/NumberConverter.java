@@ -86,6 +86,9 @@ public class NumberConverter {
 
     public String[] convertToBinary() {
         int decimalNum = arrToNum(convertToDecimal());
+        if (decimalNum == 0){
+            return new String[]{"0"};
+        }
         String binaryNum = "";
         int remainder;
         while (decimalNum != 0){
@@ -98,6 +101,9 @@ public class NumberConverter {
 
     public String[] convertToOctal() {
         int decimalNum = arrToNum(convertToDecimal());
+        if (decimalNum == 0){
+            return new String[]{"0"};
+        }
         String octalNum = "";
         int remainder;
         while (decimalNum != 0){
@@ -110,6 +116,9 @@ public class NumberConverter {
 
     public String[] convertToHex() {
         int decimalNum = arrToNum(convertToDecimal());
+        if (decimalNum == 0){
+            return new String[]{"0"};
+        }
         String hexNum = "";
         int remainder;
         while (decimalNum != 0){
@@ -123,6 +132,9 @@ public class NumberConverter {
     public String[] convertUpTo64(int newBase){
         int decimalNum = arrToNum(convertToDecimal());
         String newNum = "";
+        if (decimalNum == 0){
+            return new String[]{"0"};
+        }
         if (newBase == 1){
             for (int i = 0; i < decimalNum; i++){
                 newNum += "1";
