@@ -1,23 +1,27 @@
+import java.util.Arrays;
+
 public class NumberConverter {
-    int[] digits;
+    int[] digits; //an array containing numbers that represent an index of it's corresponding value in the values array
     int base;
     String[] values = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "+", "/"};
 
-    public NumberConverter(int number, int base) {
-        digits = numToArr(Integer.toString(number));
+    public NumberConverter(String number, int base) {
+        digits = new int[number.length()];
+        String[] tempArr = number.split("");
+        for (int i = 0; i < tempArr.length; i++){
+            for (int j = 0; j < values.length; j++){
+                if (tempArr[i].equals(values[j])){
+                    digits[i] = j;
+                }
+            }
+        }
         this.base = base;
-    }
-
-    public int getBase(){
-        return base;
     }
 
     public int[] numToArr(String numberAsString){
         int[] arr = new int[numberAsString.length()];
         for (int i = 0; i < numberAsString.length(); i++) {
-            String single = numberAsString.substring(i,i+1);
-            int d = Integer.parseInt(single);
-            arr[i] = d;
+            arr[i] = Integer.parseInt(numberAsString.substring(i,i+1));
         }
         return arr;
     }
@@ -39,10 +43,7 @@ public class NumberConverter {
     }
 
     public boolean validBase(){
-        if (base > 1 && base < 65){
-            return true;
-        }
-        return false;
+        return base > 1 && base < 65;
     }
 
     public boolean validDigits(){
@@ -53,7 +54,7 @@ public class NumberConverter {
         for (int digit : digits){
             boolean validDigit = false;
             for (String value : tempValues){
-                if (value.equals(Integer.toString(digit))){
+                if (value.equals(values[digit])){
                     validDigit = true;
                 }
             }
@@ -63,7 +64,6 @@ public class NumberConverter {
         }
         return true;
     }
-
 
     public static String[] reverse(String[] numList){
         String[] newNumList = new String[numList.length];
@@ -76,7 +76,6 @@ public class NumberConverter {
         return newNumList;
     }
 
-
     public int[] convertToDecimal() {
         int decimalNum = 0;
         for (int i = 0; i < digits.length; i++){
@@ -85,7 +84,7 @@ public class NumberConverter {
         return numToArr(Integer.toString(decimalNum));
     }
 
-    public int[] convertToBinary() {
+    public String[] convertToBinary() {
         int decimalNum = arrToNum(convertToDecimal());
         String binaryNum = "";
         int remainder;
@@ -94,15 +93,10 @@ public class NumberConverter {
             binaryNum += remainder;
             decimalNum /= 2;
         }
-        String[] tempArr = reverse(binaryNum.split(""));
-        int[] binaryArr = new int[tempArr.length];
-        for (int i = 0; i < binaryArr.length; i++){
-            binaryArr[i] = Integer.parseInt(tempArr[i]);
-        }
-        return binaryArr;
+        return reverse(binaryNum.split(""));
     }
 
-    public int[] convertToOctal() {
+    public String[] convertToOctal() {
         int decimalNum = arrToNum(convertToDecimal());
         String octalNum = "";
         int remainder;
@@ -111,17 +105,11 @@ public class NumberConverter {
             octalNum += remainder;
             decimalNum /= 8;
         }
-        String[] tempArr = reverse(octalNum.split(""));
-        int[] octalArr = new int[tempArr.length];
-        for (int i = 0; i < octalArr.length; i++){
-            octalArr[i] = Integer.parseInt(tempArr[i]);
-        }
-        return octalArr;
+        return reverse(octalNum.split(""));
     }
 
     public String[] convertToHex() {
         int decimalNum = arrToNum(convertToDecimal());
-        //String[] values = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
         String hexNum = "";
         int remainder;
         while (decimalNum != 0){
@@ -129,20 +117,25 @@ public class NumberConverter {
             hexNum += values[remainder];
             decimalNum /= 16;
         }
-        String[] hexArr = hexNum.split("");
-        return reverse(hexArr);
+        return reverse(hexNum.split(""));
     }
 
     public String[] convertUpTo64(int newBase){
         int decimalNum = arrToNum(convertToDecimal());
         String newNum = "";
+        if (newBase == 1){
+            for (int i = 0; i < decimalNum; i++){
+                newNum += "1";
+            }
+            return reverse(newNum.split(""));
+        }
+
         int remainder;
         while (decimalNum != 0){
             remainder = decimalNum % newBase;
             newNum += values[remainder];
             decimalNum /= newBase;
         }
-        String[] newNumArr = newNum.split("");
-        return reverse(newNumArr);
+        return reverse(newNum.split(""));
     }
 }

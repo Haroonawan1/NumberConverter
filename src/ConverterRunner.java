@@ -16,18 +16,18 @@ class ConverterRunner {
             int base = Integer.parseInt(s.nextLine());
 
             System.out.print("Enter your number: ");
-            int number = Integer.parseInt(s.nextLine());
+            String number = s.nextLine();
 
             s.close();
             NumberConverter nc = new NumberConverter(number, base);
 
             if (nc.validBase() && nc.validDigits()){
-                String[] conversions = new String[4];
                 System.out.println("--------------------------------");
+                String[] conversions = new String[4];
                 conversions[0] = "Base 16 : " + nc.arrToStr(nc.convertToHex());
                 conversions[1] = "Base 10 : " + nc.arrToNum(nc.convertToDecimal());
-                conversions[2] = "Base 8  : " + nc.arrToNum(nc.convertToOctal());
-                conversions[3] = "Base 2  : " + nc.arrToNum(nc.convertToBinary());
+                conversions[2] = "Base 8  : " + nc.arrToStr(nc.convertToOctal());
+                conversions[3] = "Base 2  : " + nc.arrToStr(nc.convertToBinary());
                 for (String conversion : conversions){
                     String str = "Base " + base;
                     if (!conversion.contains(str)){
@@ -44,7 +44,7 @@ class ConverterRunner {
         if (choice.equals("2")){
             System.out.println("--------------------------------");
             System.out.print("Enter your base 10 number: ");
-            int decimalNum = Integer.parseInt(s.nextLine());
+            String decimalNum = s.nextLine();
             System.out.print("Enter the base you want to convert to: ");
             int base = Integer.parseInt(s.nextLine());
 
